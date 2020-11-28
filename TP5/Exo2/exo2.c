@@ -1,14 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "Exo2.h"
+#include "Exo2Tab.h"
 
 
 #define TAILLEINITIALE 100
-typedef struct Tableau {
-	int* elt;// le tableau d’entiers
-	int size;// la taille de ce tableau d’entiers
-	int eltsCount;// le nombre d’éléments dans le tableau
-} TABLEAU;
+
 
 TABLEAU newArray() {//on initialise le tableau avec les variables de l'
 	int* elt = NULL;
@@ -124,17 +120,17 @@ int main() {
 	TABLEAU tab = newArray(); //Initialisation de tab
 	printf("Taille initiale : %d \n", tab.size); //Impression de sa taille
 	incrementArraySize(&tab, 2); //Incrémentation de 2
-	printf("Taille incrementee : %d \n", tab.size);
-	printf("%d", setElement(&tab, 5, 3));
-	printf("%d", DisplayElements(&tab, 0, 5));
-	for (int i = 0; i < TAILLEINITIALE; i++) {
+	for (int i = 0; i < TAILLEINITIALE; i++) {//On rempli le tableau avec des valeurs pour le test
 		tab.elt[i] = i;
 		printf("%d ", tab.elt[i]);
 	}
+	printf("Taille incrementee : %d \n", tab.size);//Impression de la taille après agrandissement 
+	printf("%d", setElement(&tab, 5, 3));//Inclus 3 au rang 5
+	printf("%d", DisplayElements(&tab, 0, 5));//Donne les élements du rang 0 à 5
 	printf("\n");
-	printf("%d ", deleteElements(&tab, 23, 50));
+	printf("%d ", deleteElements(&tab, 23, 50));//Supprime les élements du rang 23 à 50
 	printf("\n");
-	for (int i = 0; i < TAILLEINITIALE - (50 - 23); i++) {
+	for (int i = 0; i < TAILLEINITIALE - (50 - 23); i++) {//imprime le tableau final 
 		printf("%d ", (tab.elt[i]));
 	}
 

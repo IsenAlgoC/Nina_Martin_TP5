@@ -1,7 +1,6 @@
 ﻿#include <stdlib.h>
 #include <stdio.h>
 
-
 #define TAB2SIZE 100
 #define TAILLEAJOUT 50
 
@@ -18,13 +17,13 @@ int initTab1(int* tab, int size) {
 	}return size;
 }
 
-int afficheTab(int* tab, int size, int nbElts) {
+int afficheTab(int* tab, int size, int nbElts) {//Affiche les premiers nbELts du tableau
 	if (tab == NULL || size < 0 || nbElts>size) {
 		return -1;
 	}
 	else {
 		for (int i = 0; i < nbElts; i++) {
-			printf("%d", tab[i]);
+			printf("%d ", tab[i]);
 		}
 		return 0;
 	}
@@ -42,27 +41,8 @@ int remplirtableau(int* tab, int size, int* nbElts, int nombre) {
 }
 
 
-/*int* ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
-	if (tab == NULL || *size < 0 || *nbElts < 0) { return NULL; }
-	else {
-		if (*nbElts ==* size) {
-			*size += TAILLEAJOUT;
-			int* oldtab = tab;
-			tab = (int*)realloc(tab, (*size ) * sizeof(int)); //Allocation de la mémoire
-			if (tab == NULL) {tab = oldtab; return NULL;}​​​​​​​​
-				* (tab + *nbElts) = element;
-			*nbElts += 1;
-			return tab;
-		}
-		else {
-			*(tab + *nbElts) = element;
-			*nbElts += 1;
-			return tab;
-		}
-	}
-}
 
-*/
+
 int* ajouteElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 
 	if (tab == NULL || *size < 0 || *nbElts < 0) { return NULL; } //Si problème 
@@ -93,7 +73,10 @@ int main() {
 		printf("%d", tab[i]);
 	}
 	printf("\n");
-	afficheTab(tab, 4, 2);
+	afficheTab(tab, 4, 2);//tests non demandés
+
+
+//tests demandés 
 	int* myTab2 = NULL;
 	int tabSize = TAB2SIZE;
 	int nbElts = 0;
@@ -106,25 +89,21 @@ int main() {
 	for (int i = 0; i < TAB2SIZE; i++) {
 		printf("%d", myTab2[i]);
 	}
-	for (int j = 0; j < 20; j++) {
-		myTab2[j] = j + 1;
+	remplirtableau(myTab2, tabSize, &nbElts, tabSize);
+	for (int j = 0; j < 100; j++) {//Remplie le tableau à 100
+		printf("%d ", *(myTab2 + j));
 	}
 	printf("\n");
-	afficheTab(myTab2, TAB2SIZE, 20);
-	free(myTab2);
-	int* tab3 = NULL;
-	tab3 = (int*)malloc(100 * sizeof(int));
-	initTab1(tab3, tabSize);//test d'initialisation
-
-	if (tab3 != NULL) {
-		initTab1(tab3, 100);
+	afficheTab(myTab2, TAB2SIZE, 20);//affiche les 20 élements
+	if (myTab2 != NULL) {
+		//initTab1(tab3, 100);
 		printf("\n");
-		ajouteElementDansTableau(tab3, &tabSize, &nbElts, 102)//test de l'ajout 
-		for (int i = 0; i < tabSize; i++) {
-			printf("%d", *(tab3 + i));
+		ajouteElementDansTableau(myTab2, &tabSize, &nbElts, 101);//test de l'ajout et de l'aggrandissement du tableau
+		for (int i = 0; i < 101; i++) {
+			printf("%d ", *(myTab2 + i));
 		}
 	}
 	else { printf("mémoire insuffisante"); }
-	free(tab3);
+	free(myTab2);
 
 }

@@ -5,7 +5,7 @@
 #define TAILLEAJOUT 50
 
 
-int initTab1(int* tab, int size) {//Itinitialise le tableau avec des 0
+int initTab(int* tab, int size) {//Itinitialise le tableau avec des 0
 	if (tab == NULL || size < 0) {
 		return -1;
 	}
@@ -76,7 +76,7 @@ int main() {
 	myTab2 = (int*)malloc(TAB2SIZE * sizeof(int));//Initialisation dynamique du tableau
 	if (myTab2 != NULL) { initTab1(myTab2, tabSize); }
 	else { printf("mémoire insuffisante"); return(-1); }
-	printf("%d\n", initTab1(myTab2, 100));//Initialise le tableau
+	printf("%d\n", initTab(myTab2, 100));//Initialise le tableau
 	printf("Le tableau initialise est :");
 	for (int i = 0; i < TAB2SIZE; i++) {
 		printf("%d", myTab2[i]);
@@ -89,7 +89,6 @@ int main() {
 	printf("\n");
 	afficheTab(myTab2, TAB2SIZE, 20);//affiche les 20 élements
 	if (myTab2 != NULL) {
-		//initTab1(tab3, 100);
 		printf("\n");
 		ajouteElementDansTableau(myTab2, &tabSize, &nbElts, 101);//test de l'ajout et de l'aggrandissement du tableau
 		for (int i = 0; i < 101; i++) {

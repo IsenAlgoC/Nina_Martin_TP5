@@ -74,7 +74,7 @@ int main() {
 	int nbElts = 0;
 	printf("\n");
 	myTab2 = (int*)malloc(TAB2SIZE * sizeof(int));//Initialisation dynamique du tableau
-	if (myTab2 != NULL) { initTab1(myTab2, tabSize); }
+	if (myTab2 != NULL) { initTab(myTab2, tabSize); }
 	else { printf("mémoire insuffisante"); return(-1); }
 	printf("%d\n", initTab(myTab2, 100));//Initialise le tableau
 	printf("Le tableau initialise est :");

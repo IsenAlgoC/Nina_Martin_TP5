@@ -5,7 +5,7 @@
 #define TAILLEAJOUT 50
 
 
-int initTab1(int* tab, int size) {
+int initTab1(int* tab, int size) {//Itinitialise le tableau avec des 0
 	if (tab == NULL || size < 0) {
 		return -1;
 	}
@@ -37,7 +37,8 @@ int remplirtableau(int* tab, int size, int* nbElts, int nombre) {
 			*(tab + i) = i + 1;
 			*nbElts += 1;
 		}
-	}
+
+	}return 0;
 }
 
 
@@ -45,17 +46,18 @@ int remplirtableau(int* tab, int size, int* nbElts, int nombre) {
 
 int* ajouteElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 
-	if (tab == NULL || *size < 0 || *nbElts < 0) { return NULL; } //Si problème 
+	if (tab == NULL || *size < 0 || *nbElts < 0) { return NULL; } //Si problème retourne NULL
 
 	if (*size > * nbElts) {// Taille suffisante pour element 
 		*(tab + *nbElts) = element;
 		*nbElts += 1;
 	}
+
 	else {// Si taille pas suffissante 
 		*size += TAILLEAJOUT;//La taille est incrémentée de Tailleajout en tailleajout
 		int* tabSave = tab;
 		tab = (int*)realloc(tab, *size * sizeof(int));//On réalloue de la mémoire au tableau
-		if (tab == NULL) { tab = tabSave; return NULL; }// SI l'allocation échoue
+		if (tab == NULL) { tab = tabSave; return NULL; }// Si l'allocation échoue
 		*(tab + *nbElts) = element;//On ajoute l'élement dans le tableau à la place souhaitée
 		*nbElts += 1;// et le nombre d'élement total du tableau augmente
 		}
@@ -66,29 +68,20 @@ int* ajouteElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 }
 
 int main() {
-	int tab[4] = { 1,3,4,3 };
-	printf("%d\n", initTab1(tab, 4));
-	printf("Le tableau initialise est :");
-	for (int i = 0; i < 4; i++) {
-		printf("%d", tab[i]);
-	}
-	printf("\n");
-	afficheTab(tab, 4, 2);//tests non demandés
-
-
-//tests demandés 
+	
 	int* myTab2 = NULL;
 	int tabSize = TAB2SIZE;
 	int nbElts = 0;
 	printf("\n");
-	myTab2 = (int*)malloc(TAB2SIZE * sizeof(int));
+	myTab2 = (int*)malloc(TAB2SIZE * sizeof(int));//Initialisation dynamique du tableau
 	if (myTab2 != NULL) { initTab1(myTab2, tabSize); }
 	else { printf("mémoire insuffisante"); return(-1); }
-	printf("%d\n", initTab1(myTab2, 100));
+	printf("%d\n", initTab1(myTab2, 100));//Initialise le tableau
 	printf("Le tableau initialise est :");
 	for (int i = 0; i < TAB2SIZE; i++) {
 		printf("%d", myTab2[i]);
 	}
+	printf("\n");
 	remplirtableau(myTab2, tabSize, &nbElts, tabSize);
 	for (int j = 0; j < 100; j++) {//Remplie le tableau à 100
 		printf("%d ", *(myTab2 + j));

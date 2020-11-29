@@ -10,3 +10,7 @@ typedef struct Tableau {
 } TABLEAU;
 
 int incrementArraySize(TABLEAU* tab, int incrementValue);
+void PERMUTER(int* A, int* B);
+int setElement(TABLEAU* tab, int pos, int element);
+int DisplayElements(TABLEAU* tab, int StartPos, int EndPos);
+int deleteElements(TABLEAU* tab, int startPos, int endPos);

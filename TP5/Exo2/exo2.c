@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "Exo2Tab.h"
+#include "exo2_TP5.h"
 
 
 #define TAILLEINITIALE 100
@@ -42,42 +42,50 @@ int incrementArraySize(TABLEAU* tab, int incrementValue) {
 	free(tab->elt);
 }
 
+void PERMUTER(int *A, int *B)
+{
+	int tmp;
+	tmp = *A;
+	*A = *B;
+	*B = tmp;
+}
+
+
 
 
 int setElement(TABLEAU* tab, int pos, int element) {
+	if (tab->elt == NULL || tab->size < 0 || pos < 1) { return 0; }
+	
+
 	if (pos > tab->eltsCount) {
-		for (int i = tab->eltsCount; i < pos - 1; i++) {
+		for (int i = tab->eltsCount; i < pos; i++) {
 			tab->elt[i] = 0;
 		}
 		tab->elt[pos - 1] = element;
 		return pos;
 	}
-	else if (pos > tab->size) { //En dehors du tableau
-		return 0;// si on veut changer la taille du tableau on incrementarraysize(pos-size) et on fait une boucle for pour mettre des zéros 
-		// incrementarraysize(pos-tab->size)
-		//for (int i = tab->eltsCount; i < pos - 1; i++) {
-		//tab->elt[i] = 0;
-	}		//tab->elt[pos - 1] = element;
-
 	else {
-		*(tab->elt + pos - 1) = element;
+		*(tab->elt + tab->size - 1) = element;
+		tab->eltsCount = pos;
 		return pos;
 	}
+	
 }
 
 
 int DisplayElements(TABLEAU* tab, int StartPos, int EndPos) {
-	if (StartPos<1 || EndPos>tab->size) { //En dehors du tableau renvoie 0
+	if (StartPos<1 || EndPos>tab->size+1||tab->elt == NULL) { //En dehors du tableau renvoie 0
 		return 0;
 	}
-	else {
-		for (int i = StartPos; i < EndPos; i++)
+	if (EndPos < StartPos) {
+		PERMUTER(&EndPos, &StartPos);
+	}
+	for (int i = StartPos; i < EndPos; i++)
 		{
 			printf("%d ", *(tab->elt + i)); //Affichage du tableau
 		}
 		printf("\n");
-		return 1;
-	}
+		return 1;	
 }
 
 int deleteElements(TABLEAU* tab, int startPos, int endPos) {
@@ -85,9 +93,10 @@ int deleteElements(TABLEAU* tab, int startPos, int endPos) {
 	int sizeinit = TAILLEINITIALE;//taille initiale du tableau
 	int size = TAILLEINITIALE - (endPos - startPos);//taille finale du tableau
 
-	/*if (startPos > endPos) {//pour echanger les deux positions
-		//echanger
-	}*/
+	if (startPos > endPos) {//pour echanger les deux positions
+		PERMUTER(&startPos,&endPos);
+	}
+	int Valeurs = endPos - startPos + 1;
 	int position = startPos;
 	do {
 		for (int i = startPos; i < sizeinit - 1; i++) {
@@ -107,31 +116,38 @@ int deleteElements(TABLEAU* tab, int startPos, int endPos) {
 		else {
 			tab->elt = tpm;
 		}
-		return size;
+		tab->size -= Valeurs;
+		return tab->size;
 		free(tab->elt);
 		// si l'allocation est reussie renvoie la taille du tableau
 	}
-	//	return size;
+
+	
 }
+
 
 
 
 int main() {
 	TABLEAU tab = newArray(); //Initialisation de tab
 	printf("Taille initiale : %d \n", tab.size); //Impression de sa taille
+	
 	incrementArraySize(&tab, 2); //Incrémentation de 2
-	for (int i = 0; i < TAILLEINITIALE; i++) {//On rempli le tableau avec des valeurs pour le test
+	printf("\n");
+	for (int i = 0; i < TAILLEINITIALE+1; i++) {//On rempli le tableau avec des valeurs pour le test
 		tab.elt[i] = i;
 		printf("%d ", tab.elt[i]);
 	}
+	printf("\n");
 	printf("Taille incrementee : %d \n", tab.size);//Impression de la taille après agrandissement 
 	printf("%d", setElement(&tab, 5, 3));//Inclus 3 au rang 5
-	printf("%d", DisplayElements(&tab, 0, 5));//Donne les élements du rang 0 à 5
+	printf("\nLes elements du tableau sont : ");
+	DisplayElements(&tab, 1, 5);//Donne les élements du rang 0 à 5
 	printf("\n");
 	printf("%d ", deleteElements(&tab, 23, 50));//Supprime les élements du rang 23 à 50
 	printf("\n");
-	for (int i = 0; i < TAILLEINITIALE - (50 - 23); i++) {//imprime le tableau final 
-		printf("%d ", (tab.elt[i]));
+	for (int i = 0; i < tab.size-1 ; i++) {//imprime le tableau final 
+		printf("%d ", *(tab.elt+i));
 	}
 
 }
